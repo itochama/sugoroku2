@@ -144,24 +144,33 @@
   }
 
   .dice-row{
-    display:flex; align-items:center; justify-content:center; gap:16px;
+    display:flex; align-items:center; justify-content:center; gap:12px;
     background:rgba(255,255,255,0.06); border:1px solid rgba(224,185,58,0.35);
     border-radius:16px; padding:14px 16px; flex-wrap:wrap;
   }
   .dice-row .turn-label{ font-size:1.05rem; color:#fff; font-weight:800; width:100%; text-align:center; margin-bottom:2px; }
+  .dice-controls{
+    display:flex; align-items:center; justify-content:center; gap:12px;
+    width:100%; flex-wrap:nowrap;
+  }
   .dice-face{
-    width:64px;height:64px; background:var(--cream); border-radius:14px;
-    display:flex;align-items:center;justify-content:center; font-size:1.9rem;font-weight:900;color:var(--navy-deep);
+    width:60px;height:60px; background:var(--cream); border-radius:14px;
+    display:flex;align-items:center;justify-content:center; font-size:1.7rem;font-weight:900;color:var(--navy-deep);
     font-family:"Shippori Mincho", serif; box-shadow:0 4px 0 rgba(0,0,0,0.35);
     flex-shrink:0;
   }
   .roll-btn{
-    background:var(--gold); color:var(--navy-deep); border:none; padding:16px 34px; border-radius:28px;
-    font-weight:900; font-size:1.15rem; cursor:pointer; font-family:"Zen Kaku Gothic New",sans-serif;
-    box-shadow:0 4px 0 #a4881d;
+    background:var(--gold); color:var(--navy-deep); border:none; padding:14px 22px; border-radius:26px;
+    font-weight:900; font-size:1.05rem; cursor:pointer; font-family:"Zen Kaku Gothic New",sans-serif;
+    box-shadow:0 4px 0 #a4881d; white-space:nowrap; flex-shrink:0;
   }
   .roll-btn:disabled{ opacity:0.35; cursor:not-allowed; }
   .roll-btn:active{ transform:translateY(2px); box-shadow:0 1px 0 #a4881d; }
+  @media (max-width:400px){
+    .dice-face{ width:50px;height:50px;font-size:1.4rem; }
+    .roll-btn{ padding:12px 16px; font-size:0.95rem; }
+    .dice-controls{ gap:8px; }
+  }
 
   .legend{ display:flex; flex-wrap:wrap; gap:10px; font-size:0.85rem; color:#f0e6c8; padding:2px 4px; justify-content:center; }
   .legend span{ display:inline-flex; align-items:center; gap:5px; }
@@ -231,8 +240,10 @@
 
     <div class="dice-row">
       <div class="turn-label" id="turnLabel"></div>
-      <div class="dice-face" id="diceFace">-</div>
-      <button class="roll-btn" id="rollBtn">サイコロを振る</button>
+      <div class="dice-controls">
+        <div class="dice-face" id="diceFace">-</div>
+        <button class="roll-btn" id="rollBtn">サイコロを振る</button>
+      </div>
     </div>
 
     <div class="legend">
@@ -301,8 +312,8 @@
     {t:"ゴール！丁字屋メガネ店に到着", type:"goal", icon:"👓", x:25, y:55},
   ];
 
-  // スマホでピン／コマが盤面の端で見切れないよう、座標を安全マージン付き(6%〜94%)に変換
-  squares.forEach(s=>{ s.x = 6 + s.x*0.88; s.y = 6 + s.y*0.88; });
+  // スマホでピン／コマが盤面の端で見切れないよう、座標を安全マージン付き(8%〜92%)に変換
+  squares.forEach(s=>{ s.x = 8 + s.x*0.84; s.y = 8 + s.y*0.84; });
 
   const PLAYER_COLORS = ["#d94a37", "#3f8fbd", "#e0b93a"];
   const PLAYER_ICONS = ["🐴","🐴","🐴"];
