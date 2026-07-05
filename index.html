@@ -89,8 +89,11 @@
     border-radius:16px; padding:8px; position:relative;
   }
   .map-inner{
-    position:relative; width:100%; aspect-ratio:3/4; border-radius:12px; overflow:hidden;
+    position:relative; width:100%; aspect-ratio:3/4; max-height:70vh; border-radius:12px; overflow:hidden;
     box-shadow:inset 0 0 0 2px rgba(255,255,255,0.08);
+  }
+  @media (max-width:480px){
+    .map-inner{ aspect-ratio:1/1.15; }
   }
   .map-inner svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
@@ -117,12 +120,19 @@
   .pin.type-goal{ border-color:var(--gold); background:linear-gradient(160deg,#fff,#ffe9b8); width:52px;height:52px; font-size:24px; border-width:4px; }
   .pin.current-glow{ box-shadow:0 0 0 5px rgba(255,255,255,0.6), 0 2px 8px rgba(0,0,0,0.6); }
 
-  /* --- コマ（プレイヤートークン）をさらに大きく --- */
+  /* --- コマ（プレイヤートークン）：スマホでも枠内に収まるよう transform で位置調整 --- */
   .token{
     position:absolute; width:62px;height:62px;border-radius:50%;
     display:flex;align-items:center;justify-content:center; font-size:36px;
     border:4px solid var(--navy-deep); transition:left .2s ease, top .2s ease;
     z-index:6; box-shadow:0 5px 10px rgba(0,0,0,0.75);
+    transform:translate(-50%,-60%);
+  }
+  @media (max-width:480px){
+    .token{ width:44px;height:44px;font-size:26px;border-width:3px; }
+    .pin{ width:30px;height:30px;font-size:14px; }
+    .pin.type-start{ width:36px;height:36px;font-size:16px; }
+    .pin.type-goal{ width:42px;height:42px;font-size:19px; }
   }
 
   .event-card{
@@ -291,6 +301,9 @@
     {t:"ゴール！丁字屋メガネ店に到着", type:"goal", icon:"👓", x:25, y:55},
   ];
 
+  // スマホでピン／コマが盤面の端で見切れないよう、座標を安全マージン付き(6%〜94%)に変換
+  squares.forEach(s=>{ s.x = 6 + s.x*0.88; s.y = 6 + s.y*0.88; });
+
   const PLAYER_COLORS = ["#d94a37", "#3f8fbd", "#e0b93a"];
   const PLAYER_ICONS = ["🐴","🐴","🐴"];
 
@@ -446,8 +459,9 @@
       const sq = squares[p.pos];
       const tok = tokenEls[i];
       const offsetX = (i - (players.length-1)/2) * 5;
-      tok.style.left = `calc(${sq.x + offsetX}% - 31px)`;
-      tok.style.top = `calc(${sq.y}% - 54px)`;
+      // %指定＋CSSのtransformで中心を合わせるので、画面サイズが変わっても端で見切れない
+      tok.style.left = `${sq.x + offsetX}%`;
+      tok.style.top = `${sq.y}%`;
     });
   }
   window.addEventListener('resize', ()=>{ if(players.length) positionTokens(); });
