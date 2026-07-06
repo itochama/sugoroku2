@@ -285,7 +285,7 @@
     {t:"相馬市役所前を出発", type:"start", icon:"🏢", x:30, y:55},
     {t:"相馬光陽パークゴルフ場を通過", type:"normal", icon:"⛳", x:22, y:12},
     {t:"相馬光陽サッカー場を通過", type:"normal", icon:"⚽", x:30, y:17},
-    {t:"相馬こどもドームに立ち寄る", type:"normal", icon:"🏟️", x:40, y:15},
+    {t:"相馬こどもドームに立ち寄る", type:"normal", icon:"🏟", x:40, y:15},
     {t:"相馬市伝承鎮魂祈念館を見学", type:"normal", icon:"🏛️", x:57, y:18},
     {t:"相馬港テニスコートを通過", type:"normal", icon:"🎾", x:66, y:16},
     {t:"原釜尾浜海水浴場で一泳ぎ！2マス進む", type:"sea", icon:"🌊", x:95, y:16},
@@ -364,6 +364,10 @@
     renderPlayers();
     positionTokens();
     currentIndex = 0;
+    // 前回のゲーム終了時に固定された状態（ボタン無効化・サイコロ表示）をリセット
+    busy = false;
+    rollBtn.disabled = false;
+    diceFace.textContent = '-';
     updateTurnUI();
     log(`${players.map(p=>p.name).join('・')} ですごろく開始！`);
   });
