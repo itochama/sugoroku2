@@ -476,7 +476,7 @@
       const tok = document.createElement('div');
       tok.className = 'token';
       tok.style.background = p.color;
-      tok.innerHTML = `<img class="token-logo-img" src="${LOGO_SRC}" alt="丁字屋">`;
+      tok.textContent = PLAYER_ICONS[i];
       mapInner.appendChild(tok);
       tokenEls.push(tok);
     });
